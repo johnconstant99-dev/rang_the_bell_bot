@@ -1,3 +1,4 @@
+from os import getenv
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -16,9 +17,9 @@ CREATE TABLE IF NOT EXISTS logs (
 
 
 class MQTTTOPIC:
-    BELL_ONLINE = 'sherangthebell/status'
-    RANG_THE_BELL = 'sherangthebell/bell'
-    TAKE_HER_OUT = 'sherangthebell/take'
+    BELL_ONLINE = getenv('MQTT_TOPIC_STATUS', 'sherangthebell/status')
+    RANG_THE_BELL = getenv('MQTT_TOPIC_BELL', 'sherangthebell/bell')
+    TAKE_HER_OUT = getenv('MQTT_TOPIC_TAKE', 'sherangthebell/take')
 
 
 class EVENT:

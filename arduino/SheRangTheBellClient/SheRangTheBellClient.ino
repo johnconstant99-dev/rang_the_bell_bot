@@ -34,9 +34,9 @@ void mqttReconnect() {
   Serial.println("Connecting to the MQTT Server...");
 
   if (mqttClient.connect(mqttClientName)) {
-    mqttClient.publish("sherangthebell/status", "connected");
-    mqttClient.subscribe("sherangthebell/bell");
-    mqttClient.subscribe("sherangthebell/take");
+    mqttClient.publish(mqttTopicStatus, "connected");
+    mqttClient.subscribe(mqttTopicBell);
+    mqttClient.subscribe(mqttTopicTake);
 
     Serial.println("Connected to the MQTT Server!");
   }
@@ -46,12 +46,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Topic: ");
   Serial.println(topic);
 
-  if (strcmp(topic, "sherangthebell/bell") == 0) {
+  if (strcmp(topic, mqttTopicBell) == 0) {
     Serial.println("Enabling LED");
     LED_STATUS = true;
   }
 
-  if (strcmp(topic, "sherangthebell/take") == 0) {
+  if (strcmp(topic, mqttTopicTake) == 0) {
     Serial.println("Disabling LED");
     LED_STATUS = false;
   }
