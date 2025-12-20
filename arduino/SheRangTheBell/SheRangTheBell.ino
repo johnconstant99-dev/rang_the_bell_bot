@@ -31,8 +31,8 @@ void mqttReconnect() {
   Serial.println("Connecting to the MQTT Server...");
 
   if (mqttClient.connect(mqttClientName)) {
-    mqttClient.publish("sherangthebell/status", "connected");
-    mqttClient.subscribe("sherangthebell/status");
+    mqttClient.publish(mqttTopicStatus, "connected");
+    mqttClient.subscribe(mqttTopicStatus);
 
     Serial.println("Connected to the MQTT Server!");
   }
@@ -65,7 +65,7 @@ void loop() {
     if (now >= (last_measurement + bellDelay)) {
       Serial.print("Measurament: ");
       Serial.println(str_measurement);
-      mqttClient.publish("sherangthebell/bell", str_measurement);
+      mqttClient.publish(mqttTopicBell, str_measurement);
       last_measurement = now;
     }
   }

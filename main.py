@@ -351,13 +351,13 @@ def on_connect(client, userdata, flags, rc):
 
 def main():
     queue = Queue()
-    client = mqtt.Client()
+    client = mqtt.Client(getenv('MQTT_CLIENT_NAME', 'sherangthebell'))
 
     bot = TelegramBot(getenv('TELEGRAM_TOKEN'), queue, client)
 
     client.on_connect = on_connect
     client.on_message = bot.she_rang_the_bell
-    client.connect(getenv('MQTT_BROKER'))
+    client.connect(getenv('MQTT_BROKER'), int(getenv('MQTT_PORT', '1883')))
 
     logging.info('[MQTT] Starting MQTT loop...')
     client.loop_forever()
